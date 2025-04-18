@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGA Mentorship International</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="script.js>"></script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen">
+
+    <!-- Navigation Bar -->
+    <header class="bg-white-900 text-white p-4 sticky top-0 z-10 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <img src="ega.png" alt="EGA Logo" class="h-16">
+            <nav class="flex space-x-6">
+                <a href="index.html" class="text-white hover:text-blue-300">Home</a>
+                <a href="blog.html" class="text-white hover:text-blue-300">Blog</a>
+                <a href="login.html" class="text-white hover:text-blue-300">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative w-full h-screen bg-cover bg-center" style="background-image: url('ega.png');">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="container mx-auto text-center text-white relative z-10 flex items-center justify-center h-full">
+            <div>
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Empowering Global Leaders</h1>
+                <p class="mt-4 text-xl md:text-2xl">Join our mentorship program to connect with leaders and
+                    entrepreneurs worldwide.</p>
+                <button
+                    class="mt-6 bg-blue-700 text-white py-3 px-8 rounded-full font-semibold text-lg transition duration-300 hover:bg-blue-800"
+                    onclick="window.location.href='signup.html'">Apply Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="container mx-auto py-20 text-center">
+        <h2 class="text-3xl font-bold mb-8">Our Programs</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition duration-300">
+                <h3 class="text-2xl font-semibold mb-4">Mentorship Program</h3>
+                <p class="text-gray-700 mb-4">Connect with mentors who can guide you in your professional and personal
+                    growth.</p>
+                <a href="mentorship.html" class="text-blue-700 hover:underline">Learn More</a>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition duration-300">
+                <h3 class="text-2xl font-semibold mb-4">Community Forum</h3>
+                <p class="text-gray-700 mb-4">Engage with a global community of mentors and mentees through discussions
+                    and networking.</p>
+                <a href="forum.html" class="text-blue-700 hover:underline">Join Now</a>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition duration-300">
+                <h3 class="text-2xl font-semibold mb-4">Resources & Webinars</h3>
+                <p class="text-gray-700 mb-4">Access valuable resources and expert-led webinars to enhance your
+                    leadership skills.</p>
+                <a href="resource.html" class="text-blue-700 hover:underline">Explore Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countries Covered Section -->
+    <section class="container mx-auto py-20 text-center">
+        <h2 class="text-3xl font-bold mb-8">Covered 8+ Countries</h2>
+        <div class="flex flex-wrap justify-center gap-6">
+            <div class="text-center">
+                <img src="ghanaflag.jpeg" alt="Ghana" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">Ghana</p>
+            </div>
+            <div class="text-center">
+                <img src="tanzania.png" alt="Tanzania" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">Tanzania</p>
+            </div>
+            <div class="text-center">
+                <img src="kenya.png" alt="Kenya" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">Kenya</p>
+            </div>
+            <div class="text-center">
+                <img src="usa.png" alt="USA" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">USA</p>
+            </div>
+            <div class="text-center">
+                <img src="serbia.png" alt="Serbia" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">Serbia</p>
+            </div>
+            <div class="text-center">
+                <img src="zimbabweflag.jpg" alt="Zimbabwe" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">Zimbabwe</p>
+            </div>
+            <div class="text-center">
+                <img src="zambia.jpg" alt="Zambia" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">Zambia</p>
+            </div>
+            <div class="text-center">
+                <img src="ethiopia.png" alt="Ethiopia" class="w-16 h-12 object-cover rounded-md" />
+                <p class="text-sm mt-2">Ethiopia</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="bg-white-50 py-20">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">Testimonials</h2>
+            <div class="flex justify-center space-x-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg max-w-sm">
+                    <img src="richard.png" alt="Mentee 1" class="w-50 h-50 rounded-full mx-auto mb-4">
+                    <h4 class="font-semibold text-blue-700 mb-2">MENSAH RICHARD</h4>
+                    <p class="text-sm text-gray-500 mb-4">DATA ENGINEER</p>
+                    <p class="text-gray-600">"EGA Mentorship has transformed my career. The guidance and support I
+                        received from my mentor were invaluable!"</p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg max-w-sm">
+                    <img src="path_to_image_2.jpg" alt="Mentee 2" class="w-20 h-20 rounded-full mx-auto mb-4">
+                    <h4 class="font-semibold text-blue-700 mb-2">John Smith</h4>
+                    <p class="text-sm text-gray-500 mb-4">Entrepreneur</p>
+                    <p class="text-gray-600">"The community here is amazing. The resources and connections I've made
+                        have truly empowered me."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white-900 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 EGA Mentorship. All Rights Reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-white hover:text-blue-300">Facebook</a>
+                <a href="#" class="text-white hover:text-blue-300">Twitter</a>
+                <a href="#" class="text-white hover:text-blue-300">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+<script>
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+  
+      try {
+        const res = await fetch("http://localhost:5000/api/users/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+  
+        const data = await res.json();
+  
+        if (res.ok) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          alert("Login successful!");
+          window.location.href = "network.html";
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong");
+      }
+    });
+  </script>
+  
+</html>

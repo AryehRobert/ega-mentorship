@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <img src="ega.png" alt="EGA Logo" class="h-16">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <header class="bg-blue-900 text-white p-5 text-center text-lg font-bold shadow-lg">
+        <h1>Sign Up for EGA Mentorship</h1>
+    </header>
+    <main class="flex justify-center items-center min-h-screen">
+        <form id="registerForm" class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <label for="name" class="block font-semibold">Full Name:</label>
+            <input type="text" id="name" required class="w-full p-2 border rounded-md mb-4">
+
+            <label for="email" class="block font-semibold">Email:</label>
+            <input type="email" id="email" required class="w-full p-2 border rounded-md mb-4">
+
+            <label for="password" class="block font-semibold">Password:</label>
+            <input type="password" id="password" required class="w-full p-2 border rounded-md mb-4">
+
+            <label for="country" class="block font-semibold">Country:</label>
+            <select id="country" required onchange="updateCountryCode()" class="w-full p-2 border rounded-md mb-4">
+                <option value="">Select your country</option>
+            </select>
+
+            <label for="contact" class="block font-semibold">Contact:</label>
+            <div class="flex items-center mb-4">
+                <input type="text" id="countryCode" readonly class="w-16 p-2 border rounded-l-md bg-gray-200">
+                <input type="tel" id="contact" required pattern="[0-9]+" class="flex-1 p-2 border rounded-r-md">
+            </div>
+
+            <label for="education" class="block font-semibold">Level of Education:</label>
+            <input type="text" id="education" required class="w-full p-2 border rounded-md mb-4">
+
+            <label for="program" class="block font-semibold">Program of Studies:</label>
+            <input type="text" id="program" required class="w-full p-2 border rounded-md mb-4">
+
+            <label for="sdg" class="block font-semibold">Do you know about UN SDGs?</label>
+            <select id="sdg" required class="w-full p-2 border rounded-md mb-4">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="org" class="block font-semibold">Are you interested in establishing your own profit or
+                non-profit organization?</label>
+            <select id="org" required class="w-full p-2 border rounded-md mb-4">
+                <option value="yes">Yes</option>
+                <option value="considering">Considering</option>
+            </select>
+
+            <button type="submit"
+                class="w-full bg-blue-700 text-white py-3 px-5 rounded-lg font-semibold transition duration-300 hover:bg-blue-800">Sign
+                Up</button>
+
+            <p id="responseMsg" class="mt-4 text-center text-red-600"></p>
+        </form>
+    </main>
+    <script>
+        // Function to populate countries in the dropdown
+        function populateCountries() {
+            fetch('https://restcountries.com/v3.1/all')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Countries data received:", data);
+                    const countrySelect = document.getElementById("country");
+                    data.sort((a, b) => a.name.common.localeCompare(b.name.common)); // Sorting countries
+                    data.forEach(country => {
+                        const option = document.createElement("option");
+                        option.value = country.name.common;
+                        option.textContent = country.name.common;
+                        countrySelect.appendChild(option); // Adding each country as an option
+                    });
+                })
+                .catch(error => console.error('Error fetching country data:', error));
+        }
+
+        // Function to update the country code based on the selected country
+        function updateCountryCode() {
+            fetch('https://restcountries.com/v3.1/all')
+                .then(response => response.json())
+                .then(data => {
+                    const selectedCountry = document.getElementById("country").value;
+                    const country = data.find(c => c.name.common === selectedCountry);
+                    // Setting the country code in the input field
+                    if (country) {
+                        const countryCode = `+${country.idd.root}${country.idd.suffixes ? country.idd.suffixes[0] : ''}`;
+                        document.getElementById("countryCode").value = countryCode;
+                        console.log("Country Code:", countryCode);
+                    } else {
+                        document.getElementById("countryCode").value = "";
+                    }
+                })
+                .catch(error => console.error('Error fetching country code:', error));
+        }
+
+        // Wait until the DOM is fully loaded before attaching event listeners
+        document.addEventListener("DOMContentLoaded", function () {
+            // Populate countries when DOM is loaded
+            populateCountries();
+
+            // Adding a submit event listener to the form
+            document.getElementById('registerForm').addEventListener('submit', async function (e) {
+                // Prevent the form from submitting the usual way (page reload)
+                e.preventDefault();
+
+                // Get the form values
+                const form = e.target;  // e.target is the form that triggered the event
+                const user = {
+                    name: form.name.value,
+                    email: form.email.value,
+                    password: form.password.value,
+                    country: form.country.value,
+                    contact: form.contact.value,
+                    education: form.education.value,
+                    program: form.program.value,
+                    sdg: form.sdg.value,
+                    org: form.org.value,
+                };
+
+                // Debugging: Log form data to the console
+                console.log("Form Data:", user);
+
+                // Try sending the data to the backend
+                try {
+                    const res = await fetch('http://localhost:5000/api/users/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(user), // Sending the form data as JSON
+                    });
+
+                    // If registration is successful, show success message
+                    const data = await res.json();
+                    document.getElementById('responseMsg').innerText = data.message || 'Registered successfully!';
+
+                    // Reset the form after submission
+                    form.reset();
+                } catch (error) {
+                    // If there's an error, show an error message
+                    document.getElementById('responseMsg').innerText = 'Something went wrong.';
+                    console.error(error);  // Log the error in the console
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

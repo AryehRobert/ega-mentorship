@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="ega.png" />
+  <title>Ega-forum</title>
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Add Tailwind CDN -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+
+  <!-- Navigation Bar -->
+  <nav class="flex justify-between items-center bg-white p-4 shadow-md">
+    <div class="flex items-center space-x-4">
+      <a href="index.html" class="logo">
+        <img src="ega.png" alt="Logo" class="h-16" />
+      </a>
+      <div class="relative">
+        <input type="text" placeholder="Search" class="py-2 px-4 rounded-full w-60" />
+        <img src="search.png" alt="Search" class="absolute top-2 right-3 w-6 h-6" />
+      </div>
+    </div>
+
+    <div class="flex space-x-8">
+      <a href="home.html" class="text-black hover:text-blue-500 flex items-center space-x-2">
+        <img src="house-solid.svg" alt="Home" class="h-9 w-9 rounded-full p-2 shadow-md hover:shadow-xl" />
+        <span>Home</span>
+      </a>
+
+      <a href="network.html" class="text-black hover:text-blue-500 flex items-center space-x-2">
+        <img src="network.webp" alt="Network" class="h-9 w-9 rounded-full p-2 shadow-md hover:shadow-xl" />
+        <span>My Network</span>
+      </a>
+
+      <a href="jobs.html" class="text-black hover:text-blue-500 flex items-center space-x-2">
+        <img src="job.png" alt="Jobs" class="h-9 w-9 rounded-full p-2 shadow-md hover:shadow-xl" />
+        <span>Jobs</span>
+      </a>
+
+      <a href="messages.html" class="text-black hover:text-blue-500 flex items-center space-x-2">
+        <img src="messaging.png" alt="Messages" class="h-9 w-9 rounded-full p-2 shadow-md hover:shadow-xl" />
+        <span>Messaging</span>
+      </a>
+
+      <a href="notifications.html" class="text-black hover:text-blue-500 flex items-center space-x-2">
+        <img src="notification.png" alt="Notifications" class="h-9 w-9 rounded-full p-2 shadow-md hover:shadow-xl" />
+        <span>Notifications</span>
+      </a>
+    </div>
+
+    <div class="relative">
+      <img src="profile.jpg" alt="Profile" class="w-14 h-14 rounded-full cursor-pointer" onclick="toggleMenu()" />
+      <div class="absolute top-14 right-0 bg-white shadow-md rounded-md w-40 hidden" id="profileMenu">
+        <ul class="text-gray-700">
+          <li class="p-2 hover:bg-gray-100 cursor-pointer" onclick="viewProfile()">View Profile</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer" onclick="settings()">Settings</li>
+          <li class="p-2 hover:bg-gray-100 cursor-pointer" onclick="logout()">Logout</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="flex justify-between p-4 space-x-4">
+    <div class="w-1/4 bg-white p-4 rounded-lg shadow-md">
+      <div class="text-center">
+        <img src="richard.png" alt="Profile" class="w-20 h-20 rounded-full mx-auto mb-4" />
+        <h3 class="font-semibold text-lg text-gray-800">John Doe</h3>
+        <p class="text-gray-500 text-sm">Software Developer</p>
+        <p class="text-gray-600 text-sm">Passionate about coding and technology.</p>
+      </div>
+    </div>
+
+    <div class="w-1/2 bg-white p-4 rounded-lg shadow-md">
+      <!-- Post Creation Area -->
+      <div class="max-w-xl mx-auto my-4">
+        <textarea id="postText" class="w-full p-2 border" placeholder="What's on your mind?"></textarea>
+        <button onclick="addPost()" class="bg-blue-600 text-white px-4 py-1 mt-2 rounded">Post</button>
+      </div>
+
+      <div id="feed" class="max-w-xl mx-auto space-y-4 mt-4"></div>
+    </div>
+
+    <div class="w-1/4 bg-white p-4 rounded-lg shadow-md">
+      <!-- Add any additional sidebar content here -->
+    </div>
+  </div>
+  
+
+</body>
+<script>
+  // Example User Data (replace with actual user session or dynamic data)
+  const currentUser = { id: 'user123', name: 'John Doe' };
+
+  // Check if posts exist in localStorage, if so, load them
+  document.addEventListener("DOMContentLoaded", function () {
+    const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+    const postsContainer = document.getElementById('feed');
+
+    // Display posts from localStorage
+    posts.forEach(post => {
+      const postElement = createPostElement(post);
+      postsContainer.appendChild(postElement);
+    });
+  });
+  
+
+  // Function to add a new post
+  function addPost() {
+    const postText = document.getElementById('postText').value.trim();
+
+    if (postText) {
+      const newPost = {
+        content: postText,
+        timestamp: new Date().toLocaleString(),
+        userId: currentUser.id,
+        userName: currentUser.name,
+        replies: [] // Store replies for threaded conversation
+      };
+
+      const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+      posts.push(newPost);
+      localStorage.setItem('forumPosts', JSON.stringify(posts));
+
+      document.getElementById('postText').value = ''; // Clear text area
+      displayPosts();
+    }
+  }
+
+  // Function to display posts
+  function displayPosts() {
+    const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+    const postsContainer = document.getElementById('feed');
+    postsContainer.innerHTML = '';
+
+    posts.forEach(post => {
+      const postElement = createPostElement(post);
+      postsContainer.appendChild(postElement);
+    });
+  }
+
+  // Function to create post elements (with edit, delete, and reply functionality)
+  function createPostElement(post) {
+    const postDiv = document.createElement('div');
+    postDiv.classList.add('bg-white', 'p-4', 'rounded-lg', 'shadow-md', 'mb-4');
+
+    // Post Header (User Info)
+    const postHeader = document.createElement('div');
+    postHeader.classList.add('flex', 'items-center', 'space-x-4');
+
+    const postUserImage = document.createElement('img');
+    postUserImage.src = 'images/my profile.png';
+    postUserImage.alt = 'Profile';
+    postUserImage.classList.add('w-12', 'h-12', 'rounded-full');
+    postHeader.appendChild(postUserImage);
+
+    const postUserInfo = document.createElement('div');
+    const postUserName = document.createElement('h4');
+    postUserName.classList.add('font-semibold', 'text-gray-800');
+    postUserName.textContent = post.userName;
+    postUserInfo.appendChild(postUserName);
+
+    const postUserRole = document.createElement('p');
+    postUserRole.classList.add('text-gray-500', 'text-sm');
+    postUserRole.textContent = 'Software Developer';
+    postUserInfo.appendChild(postUserRole);
+
+    postHeader.appendChild(postUserInfo);
+    postDiv.appendChild(postHeader);
+
+    // Post Content
+    const postContent = document.createElement('p');
+    postContent.classList.add('mt-4', 'text-gray-700');
+    postContent.textContent = post.content;
+    postDiv.appendChild(postContent);
+
+    // Post Actions (Edit, Delete, Reply)
+    const postActions = document.createElement('div');
+    postActions.classList.add('flex', 'justify-between', 'items-center', 'mt-4');
+
+    const postActionsLeft = document.createElement('div');
+    postActionsLeft.classList.add('flex', 'items-center', 'space-x-2');
+    const replyButton = document.createElement('button');
+    replyButton.classList.add('text-blue-500', 'hover:underline');
+    replyButton.textContent = 'Reply';
+    replyButton.onclick = () => replyToPost(post);
+    postActionsLeft.appendChild(replyButton);
+    postActions.appendChild(postActionsLeft);
+
+    // Edit and Delete for own posts
+    if (post.userId === currentUser.id) {
+      const editButton = document.createElement('button');
+      editButton.classList.add('text-yellow-500', 'hover:underline');
+      editButton.textContent = 'Edit';
+      editButton.onclick = () => editPost(post);
+      postActions.appendChild(editButton);
+
+      const deleteButton = document.createElement('button');
+      deleteButton.classList.add('text-red-500', 'hover:underline');
+      deleteButton.textContent = 'Delete';
+      deleteButton.onclick = () => deletePost(post);
+      postActions.appendChild(deleteButton);
+    }
+
+    postDiv.appendChild(postActions);
+
+    // Display replies
+    const repliesContainer = document.createElement('div');
+    post.replies.forEach(reply => {
+      const replyDiv = document.createElement('div');
+      replyDiv.classList.add('ml-8', 'mt-2', 'text-gray-600');
+
+      const replyHeader = document.createElement('div');
+      replyHeader.classList.add('flex', 'items-center', 'space-x-4');
+      const replyUserImage = document.createElement('img');
+      replyUserImage.src = 'images/my profile.png';
+      replyUserImage.alt = 'Profile';
+      replyUserImage.classList.add('w-10', 'h-10', 'rounded-full');
+      replyHeader.appendChild(replyUserImage);
+
+      const replyUserInfo = document.createElement('div');
+      const replyUserName = document.createElement('h5');
+      replyUserName.classList.add('font-semibold', 'text-gray-800');
+      replyUserName.textContent = reply.userName;
+      replyUserInfo.appendChild(replyUserName);
+
+      const replyTimestamp = document.createElement('p');
+      replyTimestamp.classList.add('text-gray-500', 'text-xs');
+      replyTimestamp.textContent = `Replied on: ${reply.timestamp}`;
+      replyUserInfo.appendChild(replyTimestamp);
+
+      replyHeader.appendChild(replyUserInfo);
+      replyDiv.appendChild(replyHeader);
+
+      const replyContent = document.createElement('p');
+      replyContent.classList.add('mt-2', 'text-gray-700');
+      replyContent.textContent = reply.content;
+      replyDiv.appendChild(replyContent);
+
+      repliesContainer.appendChild(replyDiv);
+    });
+
+    postDiv.appendChild(repliesContainer);
+    return postDiv;
+  }
+
+  // Function to handle reply
+  function replyToPost(post) {
+    const replyContent = prompt('Write a reply:');
+    if (replyContent) {
+      const reply = {
+        content: replyContent,
+        timestamp: new Date().toLocaleString(),
+        userId: currentUser.id,
+        userName: currentUser.name
+      };
+      post.replies.push(reply);
+      updatePost(post);
+    }
+  }
+
+  // Function to handle edit
+  function editPost(post) {
+    const newContent = prompt('Edit your post:', post.content);
+    if (newContent !== post.content && newContent) {
+      post.content = newContent;
+      updatePost(post);
+    }
+  }
+
+  // Function to handle delete
+  function deletePost(post) {
+    if (confirm('Are you sure you want to delete this post?')) {
+      let posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+      posts = posts.filter(p => p.timestamp !== post.timestamp);
+      localStorage.setItem('forumPosts', JSON.stringify(posts));
+      displayPosts();
+    }
+  }
+
+  // Function to update a post
+  function updatePost(updatedPost) {
+    let posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+    posts = posts.map(post => post.timestamp === updatedPost.timestamp ? updatedPost : post);
+    localStorage.setItem('forumPosts', JSON.stringify(posts));
+    displayPosts();
+  }
+  // Toggle Profile Menu visibility
+  function toggleMenu() {
+    const menu = document.getElementById("profileMenu");
+    menu.classList.toggle("hidden"); // Toggle the visibility of the profile menu
+  }
+
+  // View Profile (Redirect to Profile Page)
+  function viewProfile() {
+    // Redirect to the profile page
+    window.location.href = "profile.html";  // Assuming you have a profile.html page
+  }
+
+  // Settings (Redirect to Settings Page)
+  function settings() {
+    // Redirect to the settings page
+    window.location.href = "settings.html";  // Assuming you have a settings.html page
+  }
+
+  // Logout (Clear session and redirect to login page)
+  function logout() {
+    // Clear user session or any stored data (localStorage/sessionStorage)
+    localStorage.removeItem("currentUser");  // Remove user data from localStorage
+    alert("You have logged out successfully!");
+
+    // Redirect to login or home page
+    window.location.href = "login.html";  // Redirect to login page
+  }
+  // Show onboarding only once
+  document.addEventListener("DOMContentLoaded", function () {
+    const hasSeenOnboarding = localStorage.getItem("onboardingShown");
+    if (!hasSeenOnboarding) {
+      document.getElementById("onboardingModal").classList.remove("hidden");
+    }
+  });
+
+  // Dismiss onboarding and save state
+  function dismissOnboarding() {
+    localStorage.setItem("onboardingShown", "true");
+    document.getElementById("onboardingModal").classList.add("hidden");
+  }
+
+</script>
+
+</html>

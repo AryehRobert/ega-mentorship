@@ -1,0 +1,95 @@
+/* Tailwind Utility Classes Applied */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply font-sans bg-gradient-to-r from-blue-500 to-purple-500 text-gray-900 flex justify-center items-center h-screen;
+}
+
+/* Header */
+header {
+    @apply bg-blue-900 text-white p-5 text-center text-lg font-bold shadow-lg w-full;
+}
+
+/* Navigation Bar */
+nav {
+    @apply flex justify-center gap-4 p-4 bg-blue-800 border-b-2 border-blue-600 w-full;
+}
+
+nav a {
+    @apply text-white px-4 py-2 rounded-lg transition duration-300 font-medium;
+}
+
+nav a:hover {
+    @apply bg-blue-600 scale-105;
+}
+
+/* Main Content */
+main {
+    @apply flex flex-col items-center p-6;
+}
+
+section {
+    @apply bg-white p-6 m-6 rounded-xl shadow-xl w-4/5 max-w-lg text-center;
+}
+
+/* Buttons */
+button {
+    @apply bg-blue-700 text-white py-3 px-5 rounded-lg font-semibold transition duration-300;
+}
+
+button:hover {
+    @apply bg-blue-800 scale-105;
+}
+
+/* Forms */
+form {
+    @apply bg-white p-8 rounded-xl shadow-xl w-full max-w-md flex flex-col gap-5;
+}
+
+label {
+    @apply font-semibold text-gray-700;
+}
+
+input, select {
+    @apply w-full p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+/* Contact Field with Country Code */
+#contact-wrapper {
+    @apply flex items-center;
+}
+
+#countryCode {
+    @apply w-20 bg-gray-200 border-2 border-gray-300 text-center p-3 rounded-lg font-semibold;
+}
+
+/* Forum and Blog Page Styles */
+.forum-container, .blog-container {
+    @apply w-4/5 max-w-3xl bg-white p-6 rounded-xl shadow-xl;
+}
+
+.forum-post, .blog-post {
+    @apply border-b border-gray-200 py-4;
+}
+
+.forum-post h3, .blog-post h2 {
+    @apply text-blue-700;
+}
+
+.forum-post p, .blog-post p {
+    @apply text-gray-600;
+}
+
+/* Footer */
+footer {
+    @apply text-center bg-blue-800 text-white py-3 fixed bottom-0 w-full;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    section, form, .forum-container, .blog-container {
+        @apply w-11/12;
+    }
+}

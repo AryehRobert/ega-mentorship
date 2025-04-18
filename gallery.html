@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGA Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+     <!-- Navbar -->
+  <nav class="flex justify-between items-center px-6 py-4 bg-blue-800 text-white shadow">
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="ega.png" alt="EGA" class="h-10 w-10 rounded-full">
+      <span class="font-bold text-xl">EGA</span>
+    </a>
+    <div>
+      <a href="index.html" class="hover:underline text-sm">Home</a>
+    </div>
+  </nav>
+
+    <header class="bg-blue-900 text-white p-5 text-center text-lg font-bold shadow-lg">
+        <h1>EGA Mentorship Gallery</h1>
+
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6">
+        <h2 class="text-2xl font-semibold mb-4">Media Shared by the Community</h2>
+        <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <!-- Media will be loaded here -->
+        </div>
+    </main>
+
+    <script>
+        const galleryGrid = document.getElementById("galleryGrid");
+
+        // Sample media items, you can replace this with localStorage or database fetch
+        const storedMedia = JSON.parse(localStorage.getItem("egaGalleryMedia")) || [
+            {
+                type: "image",
+                src: "kenya.png",
+                user: "Alice"
+            },
+            {
+                type: "video",
+                src: "https://www.w3schools.com/html/mov_bbb.mp4",
+                mime: "video/mp4",
+                user: "Bob"
+            }
+        ];
+
+        storedMedia.forEach(media => {
+            const div = document.createElement("div");
+            div.classList.add("bg-white", "rounded-lg", "shadow-md", "overflow-hidden");
+
+            const userTag = `<div class='bg-gray-200 text-sm p-2 text-center font-semibold'>Posted by ${media.user}</div>`;
+
+            if (media.type === "image") {
+                div.innerHTML = `
+                    <img src="${media.src}" class="w-full object-cover max-h-60">
+                    ${userTag}
+                `;
+            } else if (media.type === "video") {
+                div.innerHTML = `
+                    <video controls class="w-full max-h-60">
+                        <source src="${media.src}" type="${media.mime}">
+                    </video>
+                    ${userTag}
+                `;
+            }
+
+            galleryGrid.appendChild(div);
+        });
+    </script>
+</body>
+</html>

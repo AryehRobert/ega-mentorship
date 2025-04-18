@@ -1,0 +1,28 @@
+<!-- jobs.html -->
+<main class="max-w-5xl mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Mentorship & Internships</h2>
+    <div class="bg-white p-6 rounded shadow">
+      <h3 class="text-lg font-semibold">Frontend Intern at GoE</h3>
+      <p class="text-gray-600">Remote - 3 Months</p>
+      <p class="mt-2 text-sm">Learn React, Tailwind and build real projects. Mentor: Brian Odhiambo.</p>
+      <button class="mt-4 px-4 py-2 bg-green-600 text-white rounded">Apply Now</button>
+    </div>
+    <select id="filterOption" onchange="filterList()" class="border rounded p-2">
+        <option value="all">All</option>
+        <option value="mentors">Mentors</option>
+        <option value="mentees">Mentees</option>
+      </select>
+      
+  </main>
+  <script>
+    function filterList() {
+      const value = document.getElementById("filterOption").value;
+      const profiles = document.querySelectorAll(".profile-card");
+  
+      profiles.forEach(card => {
+        const role = card.dataset.role; // make sure to add `data-role="mentor"` to cards
+        card.style.display = (value === "all" || role === value) ? "block" : "none";
+      });
+    }
+  </script>
+  

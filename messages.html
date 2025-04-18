@@ -1,0 +1,55 @@
+<!-- messages.html -->
+<main class="max-w-4xl mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Messages</h2>
+    <div class="bg-white p-4 rounded shadow space-y-4">
+      <div class="flex justify-between items-center">
+        <span class="font-semibold">Chat with Jelena</span>
+        <small class="text-gray-500">Online</small>
+      </div>
+      <div class="bg-gray-100 p-3 rounded">Hi Jelena, excited about the next EGA meetup?</div>
+      <input type="text" placeholder="Type your message..." class="w-full mt-2 p-2 border rounded">
+    </div>
+
+    <div class="flex max-w-4xl mx-auto gap-4 p-4">
+        <!-- Contact List -->
+        <div class="w-1/3 bg-white rounded shadow p-2">
+          <h3 class="font-bold mb-2">Contacts</h3>
+          <ul>
+            <li><button onclick="loadChat(1)">Ama Mensah</button></li>
+            <li><button onclick="loadChat(2)">Brian Odhiambo</button></li>
+          </ul>
+        </div>
+      
+        <!-- Chat Area -->
+        <div class="w-2/3 bg-white rounded shadow p-4">
+          <div id="chatBox" class="h-64 overflow-y-auto border p-2 mb-2"></div>
+          <input id="msgInput" class="w-full border p-2" placeholder="Type a message..." />
+          <button onclick="sendMessage()" class="bg-blue-500 text-white px-4 py-1 rounded mt-2">Send</button>
+        </div>
+      </div>
+      
+  </main>
+
+  
+  <script>
+    let currentContact = null;
+  
+    function loadChat(id) {
+      currentContact = id;
+      const msgs = JSON.parse(localStorage.getItem(`chat_${id}`)) || [];
+      const box = document.getElementById("chatBox");
+      box.innerHTML = msgs.map(m => `<div class="p-1">${m}</div>`).join("");
+    }
+  
+    function sendMessage() {
+      const msg = document.getElementById("msgInput").value;
+      if (!currentContact || msg.trim() === "") return;
+      const key = `chat_${currentContact}`;
+      const msgs = JSON.parse(localStorage.getItem(key)) || [];
+      msgs.push(msg);
+      localStorage.setItem(key, JSON.stringify(msgs));
+      document.getElementById("msgInput").value = "";
+      loadChat(currentContact);
+    }
+  </script>
+    

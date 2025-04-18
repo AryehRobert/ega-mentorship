@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow p-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-900 dark:text-white">EGA Mentorship</h1>
+            <a href="index.html" class="text-blue-600 hover:underline text-sm">← Back to Home</a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-3xl mx-auto p-6 space-y-6">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">🔐 Account Settings</h2>
+
+        <!-- Change Password -->
+        <section class="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-5 space-y-3">
+            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200">Change Password</h3>
+            <div class="space-y-2">
+                <input type="password" placeholder="Current Password"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                <input type="password" placeholder="New Password"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                <input type="password" placeholder="Confirm New Password"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Update Password</button>
+            </div>
+        </section>
+
+        <!-- Email / Phone Updates -->
+        <section class="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-5 space-y-3">
+            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200">Email / Phone Updates</h3>
+            <div class="space-y-2">
+                <input type="email" placeholder="New Email Address"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                <input type="tel" placeholder="New Phone Number"
+                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">Update Info</button>
+            </div>
+        </section>
+
+        <!-- Two-Factor Authentication -->
+        <section class="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-5 space-y-3">
+            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200">Two-Factor Authentication</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Enhance your account security by enabling 2FA.</p>
+            <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">Enable 2FA</button>
+        </section>
+
+        <!-- Delete / Deactivate Account -->
+        <section class="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-5 space-y-3 border-t-2 border-red-500">
+            <h3 class="text-lg font-semibold text-red-600">Delete / Deactivate Account</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">This action is irreversible. You may temporarily
+                deactivate or permanently delete your account.</p>
+            <div class="flex space-x-3">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">Deactivate</button>
+                <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">Delete Account</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Optional Footer -->
+    <footer class="text-center text-xs text-gray-500 dark:text-gray-400 mt-10 pb-4">
+        &copy; 2025 EGA Mentorship Platform
+    </footer>
+
+</body>
+<script>
+    document.querySelector("button.bg-blue-600").onclick = function () {
+        alert("Your password has been updated!");
+    };
+    document.querySelector("button.bg-green-600").onclick = function () {
+        alert("Contact info updated!");
+    };
+    // Example: Save email
+    localStorage.setItem('userEmail', document.querySelector('input[type="email"]').value);
+
+</script>
+
+</html>
